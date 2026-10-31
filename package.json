@@ -1,0 +1,24 @@
+{
+  "name": "freshtrace",
+  "version": "0.1.0",
+  "description": "FreshTrace: one tamper-proof record per batch of fresh produce, from farm to retailer (Team 22, CSE 540)",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "node": "hardhat node",
+    "deploy:local": "hardhat run scripts/deploy.js --network localhost",
+    "deploy:amoy": "hardhat run scripts/deploy.js --network amoy",
+    "roles:local": "hardhat run scripts/setup-roles.js --network localhost",
+    "roles:amoy": "hardhat run scripts/setup-roles.js --network amoy",
+    "sensor:local": "hardhat run scripts/sensor-simulator.js --network localhost",
+    "sensor:amoy": "hardhat run scripts/sensor-simulator.js --network amoy",
+    "upload-cert": "node scripts/upload-certificate.js"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^6.1.2",
+    "dotenv": "^18.0.9",
+    "hardhat": "^2.29.1"
+  }
+}
