@@ -78,7 +78,8 @@ npx hardhat test
 
 ## Deploying
 
-TODO: `scripts/deploy.js` and `scripts/setup-roles.js` aren't written yet, so the deploy and role commands below don't work yet.
+`deploy.js` writes the contract address and the ABI to `deployments/<network>.json`.
+`setup-roles.js` reads that file, so always deploy before assigning roles.
 
 Local chain:
 
@@ -88,11 +89,15 @@ npm run deploy:local    # terminal 2
 npm run roles:local
 ```
 
+On a local chain the roles go to test accounts 1 to 7 (Farmer, Packer, Carrier, DistributionCenter,
+Retailer, Regulator, Sensor). Account 0 is the admin and sends the `setRole` calls.
+
 Polygon Amoy:
 
 1. Put a test account's private key in `DEPLOYER_PRIVATE_KEY` in `.env` and fund it from the faucet.
 2. Run `npm run deploy:amoy`. The deployer becomes the admin.
-3. Run `npm run roles:amoy` to assign roles to the team's wallets.
+3. Fill in the team's wallet addresses in `AMOY_WALLETS` at the top of `scripts/setup-roles.js`,
+   then run `npm run roles:amoy`. Any address still left as the zero address is skipped.
 
 ## How it's used
 
