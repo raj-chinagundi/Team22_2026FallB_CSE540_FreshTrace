@@ -85,7 +85,24 @@ contract FreshTrace is IFreshTrace {
         int32 maxLimit,
         string calldata certificateCID
     ) external onlyRole(Role.Farmer) returns (uint256 batchId) {
-        // TODO: check limits, save the batch, add the first history entry, emit BatchRegistered
+        if (minLimit >= maxLimit) revert InvalidLimits();
+        batchId = ++batchCount;
+        batches[batchId] = Batch({
+            id: batchId,
+            product: product,
+            quantityKg: quantityKg,
+            farmer: msg.sender,
+            currentHolder: msg.sender,
+            status: Status.Harvested,
+            minLimit: minLimit,
+            maxLimit: maxLimit,
+            flagged: false,
+            recalled: false,
+            certificateCID: certificateCID,
+            createdAt: uint64(block.timestamp)
+        });
+        histories[batchId].push(TraceRecord(msg.sender, Status.Harvested, uint64(block.timestamp)));
+        emit BatchRegistered(batchId, msg.sender, product, certificateCID);
     }
 
     // Current holder hands the batch to the next party
@@ -95,7 +112,11 @@ contract FreshTrace is IFreshTrace {
         onlyHolder(batchId)
         whenMovable(batchId)
     {
-        // TODO: check the recipient, change the holder, add a history entry, emit CustodyTransferred
+        if (to == msg.sender || !_canHoldBatch(roleOf[to])) revert InvalidRecipient();
+        Batch storage batch = batches[batchId];
+        batch.currentHolder = to;
+        histories[batchId].push(TraceRecord(to, batch.status, uint64(block.timestamp)));
+        emit CustodyTransferred(batchId, msg.sender, to);
     }
 
     // Current holder moves the batch to the next status
