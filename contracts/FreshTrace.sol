@@ -126,13 +126,13 @@ contract FreshTrace is IFreshTrace {
         onlyHolder(batchId)
         whenMovable(batchId)
     {
-           Batch storage batch = batches[batchId];
-           // Status can only move forward, never back or stay the same
-           if (newStatus <= batch.status) revert StatusCannotGoBack();
-           batch.status = newStatus;
-           // Add a history entry so the customer can see the journey
-           histories[batchId].push(TraceRecord(msg.sender, newStatus, uint64(block.timestamp)));
-           emit StatusUpdated(batchId, newStatus);
+        Batch storage batch = batches[batchId];
+        // Status can only move forward, never back or stay the same
+        if (newStatus <= batch.status) revert StatusCannotGoBack();
+        batch.status = newStatus;
+        // Add a history entry so the customer can see the journey
+        histories[batchId].push(TraceRecord(msg.sender, newStatus, uint64(block.timestamp)));
+        emit StatusUpdated(batchId, newStatus);
     }
 
     // ---- Regulator recall ----
@@ -179,16 +179,16 @@ contract FreshTrace is IFreshTrace {
 
     // ---- Views ----
     // Anyone can read a batch, no wallet needed
-    
     function getBatch(uint256 batchId) external view batchExists(batchId) returns (Batch memory) {
-           return batches[batchId];
+        return batches[batchId];
     }
 
     // Who held the batch and when, oldest first
     function getHistory(uint256 batchId) external view batchExists(batchId) returns (TraceRecord[] memory) {
-           return histories[batchId];
+        return histories[batchId];
     }
 
+    // Every sensor summary for the batch, oldest first
     function getReadings(uint256 batchId) external view batchExists(batchId) returns (Reading[] memory) {
         return readings[batchId];
     }
