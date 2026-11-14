@@ -67,6 +67,13 @@ async function main() {
     assigned.push({ role: target.name, account: target.account });
   }
 
+  // Save role name -> address in the deployments file so the web UI can show
+  // "Packer" instead of a raw address. Skip it if nothing was assigned so we don't wipe it.
+  if (assigned.length > 0) {
+    deployment.wallets = Object.fromEntries(assigned.map((a) => [a.role, a.account]));
+    fs.writeFileSync(file, JSON.stringify(deployment, null, 2) + "\n");
+  }
+
   console.log(`FreshTrace at ${deployment.address} on ${network.name}`);
   console.log(`Admin:      ${admin.address}`);
   console.table(assigned);

@@ -1,0 +1,104 @@
+/* All styling for the app. Pages reuse these classes instead of their own CSS. */
+
+:root {
+  --green: #2e7d32;
+  --green-light: #e8f5e9;
+  --red: #c62828;
+  --red-light: #ffebee;
+  --orange: #e65100;
+  --orange-light: #fff3e0;
+  --text: #1f2933;
+  --muted: #6b7280;
+  --border: #d9dee3;
+  --bg: #f5f7f5;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 17px;
+  color: var(--text);
+  background: var(--bg);
+}
+
+a { color: var(--green); }
+h1 { margin: 0 0 8px; font-size: 1.6rem; }
+h2 { margin: 0 0 12px; font-size: 1.2rem; }
+
+/* Header and nav */
+.header { background: var(--green); color: white; padding: 12px 24px 0; }
+.header a { color: white; }
+.header-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+.header-info { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; font-size: 0.95rem; }
+.header .muted { color: #c8e6c9; }
+.logo { font-size: 1.5rem; font-weight: 700; text-decoration: none; }
+.wallet { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+.role-tag { background: white; color: var(--green); border-radius: 4px; padding: 2px 8px; font-weight: 700; }
+.role-tag.role-none { color: var(--muted); }
+.nav { display: flex; gap: 4px; margin-top: 10px; flex-wrap: wrap; }
+.nav a { padding: 8px 14px; text-decoration: none; border-radius: 6px 6px 0 0; }
+.nav a.active { background: var(--bg); color: var(--green); font-weight: 600; }
+
+.main { max-width: 1000px; margin: 0 auto; padding: 20px 16px 40px; }
+
+/* Boxes and layout */
+.card { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 18px 20px; margin-bottom: 16px; }
+.row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.space-between { justify-content: space-between; }
+.form { display: grid; gap: 12px; max-width: 480px; }
+.form label { display: grid; gap: 4px; font-weight: 600; font-size: 0.95rem; }
+
+/* Inputs and buttons */
+input, select { font: inherit; padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px; min-width: 0; }
+button { font: inherit; font-weight: 600; padding: 8px 16px; border: none; border-radius: 6px; background: var(--green); color: white; cursor: pointer; }
+button:hover { opacity: 0.9; }
+button:disabled { opacity: 0.5; cursor: default; }
+button.secondary { background: white; color: var(--green); border: 1px solid var(--green); }
+button.danger { background: var(--red); color: white; }
+
+/* Tables */
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); }
+th { font-size: 0.9rem; color: var(--muted); }
+
+/* Text */
+.muted { color: var(--muted); }
+.mono { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.9rem; word-break: break-all; }
+.error { color: var(--red); font-weight: 600; }
+.warning { color: var(--orange); font-weight: 600; }
+
+/* Small labels next to a batch: <span className="tag tag-red">Recalled</span> */
+.tag { display: inline-block; border-radius: 4px; padding: 2px 8px; margin-right: 6px; font-size: 0.85rem; font-weight: 700; }
+.tag-red { background: var(--red-light); color: var(--red); }
+.tag-orange { background: var(--orange-light); color: var(--orange); }
+.tag-green { background: var(--green-light); color: var(--green); }
+
+/* Big banners on the customer page: <div className="banner banner-red">…</div> */
+.banner { border-radius: 8px; padding: 14px 18px; margin-bottom: 16px; font-size: 1.1rem; font-weight: 700; }
+.banner-red { background: var(--red-light); color: var(--red); border: 2px solid var(--red); }
+.banner-orange { background: var(--orange-light); color: var(--orange); border: 2px solid var(--orange); }
+.banner-green { background: var(--green-light); color: var(--green); border: 2px solid var(--green); }
+
+/* Status steps: <div className="steps"><span className="step done">Harvested</span>…</div> */
+.steps { display: flex; flex-wrap: wrap; gap: 6px; }
+.step { padding: 6px 10px; border-radius: 6px; background: #eceff1; color: var(--muted); font-size: 0.9rem; }
+.step.done { background: var(--green-light); color: var(--green); }
+.step.current { background: var(--green); color: white; font-weight: 700; }
+
+/* Transaction status from tx.jsx */
+.tx { margin-top: 12px; padding: 10px 14px; border-radius: 6px; font-weight: 600; }
+.tx-wait { background: #e3f2fd; color: #1565c0; }
+.tx-ok { background: var(--green-light); color: var(--green); }
+.tx-error { background: var(--red-light); color: var(--red); }
+.tx-hash { font-weight: 400; font-size: 0.85rem; margin-top: 4px; word-break: break-all; }
+
+/* Phones: stack everything in one column */
+@media (max-width: 600px) {
+  body { font-size: 16px; }
+  .header { padding: 10px 12px 0; }
+  .main { padding: 12px 10px 30px; }
+  .card { padding: 14px; }
+}
