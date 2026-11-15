@@ -115,11 +115,15 @@ Polygon Amoy:
 
 ## How it's used
 
-1. The admin assigns roles with `setRole`.
-2. The farmer uploads the certificate to IPFS, then calls `registerBatch` with the CID and the safe range.
-3. Each holder calls `transferCustody` and `updateStatus` as the batch moves along.
-4. The sensor calls `recordReadings` during transit. Out-of-range readings flag the batch.
-5. A regulator can call `recallBatch` at any point.
-6. The customer scans the QR code, and the web page shows `getBatch`, `getHistory` and `getReadings`.
+1. The admin assigns roles on the Admin page (`setRole`).
+2. The farmer uploads the certificate to IPFS with `npm run upload-cert -- <file>`, then registers the batch on the Register batch page with the CID and the safe range (`registerBatch`). The page shows a QR code for the batch.
+3. Each holder moves the batch along on the My batches page (`transferCustody` and `updateStatus`).
+4. The sensor script posts readings during transit (`recordReadings`). Out-of-range readings flag the batch.
+5. A regulator can recall any batch on the Recall page (`recallBatch`).
+6. The customer scans the QR code, which opens the Verify batch page (`/batch/:id`). It shows `getBatch`, `getHistory` and `getReadings` and needs no wallet.
 
 To see gas costs, run `REPORT_GAS=true npx hardhat test`.
+
+### Running the web UI
+
+See [`frontend/README.md`](frontend/README.md) for how to run the UI locally or on Amoy, and what each page does.
