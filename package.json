@@ -12,13 +12,16 @@
     "deploy:amoy": "hardhat run scripts/deploy.js --network amoy",
     "roles:local": "hardhat run scripts/setup-roles.js --network localhost",
     "roles:amoy": "hardhat run scripts/setup-roles.js --network amoy",
-    "sensor:local": "hardhat run scripts/sensor-simulator.js --network localhost",
-    "sensor:amoy": "hardhat run scripts/sensor-simulator.js --network amoy",
+    "sensor:local": "node scripts/sensor-simulator.js localhost",
+    "sensor:amoy": "node scripts/sensor-simulator.js amoy",
+    "seed:local": "hardhat run scripts/seed-demo.js --network localhost",
+    "demo:local": "npm run deploy:local && npm run roles:local && npm run seed:local",
     "upload-cert": "node scripts/upload-certificate.js"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^6.1.2",
     "dotenv": "^18.0.9",
+    "ethers": "^6.17.0",
     "hardhat": "^2.29.1"
   }
 }
