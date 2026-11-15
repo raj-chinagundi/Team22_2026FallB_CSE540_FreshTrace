@@ -85,12 +85,26 @@ Local chain:
 
 ```bash
 npx hardhat node        # terminal 1
-npm run deploy:local    # terminal 2
-npm run roles:local
+npm run demo:local      # terminal 2: deploy + roles + a demo batch
 ```
 
-On a local chain the roles go to test accounts 1 to 7 (Farmer, Packer, Carrier, DistributionCenter,
-Retailer, Regulator, Sensor). Account 0 is the admin and sends the `setRole` calls.
+`demo:local` runs `deploy:local`, `roles:local` and `seed:local` in that order. On a local chain the
+roles go to test accounts 1 to 7 (Farmer, Packer, Carrier, DistributionCenter, Retailer, Regulator,
+Sensor). Account 0 is the admin and sends the `setRole` calls. The seed script then walks batch #1
+from the farmer to the retailer, so the customer page has a full journey to show.
+
+The chain is wiped every time `npx hardhat node` restarts, so run `npm run demo:local` again after a
+restart.
+
+Sensor readings (Hardhat account 7 is the sensor):
+
+```bash
+npm run sensor:local -- 1          # 12 readings inside the safe range
+npm run sensor:local -- 2 --bad    # one reading 3 °C too warm, so batch 2 gets flagged
+```
+
+The full log is saved to `sensor-logs/`. Only the min, the max and the log's keccak256 hash go
+on-chain.
 
 Polygon Amoy:
 
